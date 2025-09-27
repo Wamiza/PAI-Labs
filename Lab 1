@@ -1,1 +1,13 @@
+Task 1:
+x = input("Enter Number: ")
+print("The value in float is: ",float(x))
+print("The value in string is: ",str(x))
+print("The value in comple is: ",complex(x))
+
+if (int(x) // 2)*2 ==int(x) :
+    print("Value can be divisible by 2")
+else:
+    print("No! Value can't be divisilbe by 2")
+
+Task 2:
 
