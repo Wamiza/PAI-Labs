@@ -1,1 +1,303 @@
+Task 1: 
 
+class Vehicle:
+    def __init__(self,capacity):
+        self.capacity = capacity
+        
+    def fare(self):
+        return self.capacity * 100
+
+class Bus(Vehicle):
+    def __init__(self,capacity):
+        super().__init__(capacity)
+        
+    def fare(self):
+        fare = super().fare()
+        totalFare = fare + (0.10*fare)
+        return totalFare
+
+v = Vehicle(10)
+print(v.fare())
+
+b = Bus(100)
+print(b.fare())
+
+
+Task 2:
+
+from abc import ABC,abstractmethod
+class Shape(ABC):
+    def __init__(self):
+        pass
+    
+    @abstractmethod   
+    def area(self):
+        pass
+        
+class Rectangle(Shape):
+    def __init__(self,length, width):
+        self.length = length
+        self.width = width
+        
+    def area(self):
+        return self.length*self.width 
+    
+class Triangle(Shape):
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+        
+    def area(self):
+        return 1/2*(self.length * self.width)
+    
+class Square(Shape):
+    def __init__(self, n):
+        self.n = n
+        
+    def area(self):
+        return self.n * self.n
+    
+r = Rectangle(2,3)
+print("The Area of Rectangle is: ",r.area())
+
+t = Triangle(2,3)
+print("The Area of Triangle is: ", t.area())
+
+
+Task 3:
+
+class Account:
+    def __init__(self, accountNo, accountBal, securityCode):
+        self.__accountNo = accountNo
+        self.__accountBal = accountBal
+        self.__securityCode = securityCode
+        
+    def display(self):
+        print("Account No:", self.__accountNo)
+        print("Account Balance:", self.__accountBal)
+        print("Security Code:", self.__securityCode)
+        
+a = Account(1234,200,5678)
+a.display()
+
+
+Task4:
+
+class Student:
+    def __init__(self, id, name):
+        self.id = id
+        self.name = name
+        
+    def displayS(self):
+        print("Student ID:", self.id)
+        print("Student Name:", self.name)
+        
+class Marks(Student):
+    def __init__(self,id, name, marks_algo, marks_dataScience, marks_calculus):
+        super().__init__(id,name)
+        self.marks_algo = marks_algo
+        self.marks_dataScience = marks_dataScience
+        self.marks_calculus = marks_calculus
+
+    def display(self):
+        print("Marks in Algorithms:", self.marks_algo)
+        print("Marks in Data Science:", self.marks_dataScience)
+        print("Marks in Calculus:", self.marks_calculus)
+    
+class Result(Marks):
+    def __init__(self, id, name, marks_algo, marks_dataScience, marks_calculus):
+        super().__init__(id, name, marks_algo, marks_dataScience, marks_calculus)
+    
+    def calculate(self):
+        total = self.marks_algo + self.marks_dataScience + self.marks_calculus
+        average = total / 3
+        print("Total Marks:", total)
+        print("Average Marks:", average)
+
+r = Result(1234, "Me", 85, 90, 80)
+r.displayS()
+r.display()
+r.calculate()
+
+
+Task 5:
+
+from datetime import date
+
+class Vehicle:
+    def __init__(self, make, model, rentalPrice):
+        self.make = make
+        self.model = model
+        self.__rentalPrice = rentalPrice     
+        self.available = True
+        
+    def checkAvailability(self):
+        return self.available
+    
+    def rentVehicle(self):
+        if self.available:
+            self.available = False
+            print(f"{self.make} {self.model} has been rented.")
+        else:
+            print(f"{self.make} {self.model} is not available.")
+    
+    def returnVehicle(self):
+        self.available = True
+        print(f"{self.make} {self.model} has been returned and is now available.")
+        
+    def calculateRentalCost(self, days):
+        return self.__rentalPrice * days
+    
+    def displayDetails(self):
+        print(f"Vehicle: {self.make} {self.model}")
+        print(f"Type: {self.__class__.__name__}")
+        print(f"Rental Price (per day): Rs {self.__rentalPrice}")
+        print(f"Availability: {'Available' if self.available else 'Rented'}")
+
+
+class Car(Vehicle):
+    def __init__(self, make, model, rentalPrice, numDoors):
+        super().__init__(make, model, rentalPrice)
+        self.numDoors = numDoors
+
+    def displayDetails(self):
+        super().displayDetails()
+        print(f"Number of Doors: {self.numDoors}")
+
+
+class SUV(Vehicle):
+    def __init__(self, make, model, rentalPrice, offroadCapable):
+        super().__init__(make, model, rentalPrice)
+        self.offroadCapable = offroadCapable
+
+    def displayDetails(self):
+        super().displayDetails()
+        print(f"Offroad Capable: {'Yes' if self.offroadCapable else 'No'}")
+
+
+class Truck(Vehicle):
+    def __init__(self, make, model, rentalPrice, loadCapacity):
+        super().__init__(make, model, rentalPrice)
+        self.loadCapacity = loadCapacity  
+
+    def displayDetails(self):
+        super().displayDetails()
+        print(f"Load Capacity: {self.loadCapacity} tons")
+
+
+class Customer:
+    def __init__(self, name, contact):
+        self.name = name
+        self.__contact = contact        
+        self.rentalHistory = []
+
+    def addRental(self, reservation):
+        self.rentalHistory.append(reservation)
+
+    def displayRentalHistory(self):
+        print(f"Rental History for {self.name}:")
+        if not self.rentalHistory:
+            print("No rentals yet.")
+        else:
+            for res in self.rentalHistory:
+                res.displayDetails()
+
+
+class RentalReservation:
+    def __init__(self, customer, vehicle, startDate, endDate):
+        self.customer = customer
+        self.vehicle = vehicle
+        self.startDate = startDate
+        self.endDate = endDate
+
+        if vehicle.checkAvailability():
+            vehicle.rentVehicle()
+            customer.addRental(self)
+        else:
+            print(f"Sorry, {vehicle.make} {vehicle.model} is not available.")
+
+    def calculateTotalCost(self):
+        numDays = (self.endDate - self.startDate).days
+        return self.vehicle.calculateRentalCost(numDays)
+
+    def displayDetails(self):
+        print("Reservation Details:")
+        print(f"Customer: {self.customer.name}")
+        print(f"Vehicle: {self.vehicle.make} {self.vehicle.model}")
+        print(f"Rental Period: {self.startDate} to {self.endDate}")
+        print(f"Total Cost: Rs {self.calculateTotalCost()}")
+
+def displayAny(obj):
+    """Polymorphism example: works with any object type."""
+    obj.displayDetails()
+
+if __name__ == "__main__":
+    car = Car("Toyota", "Corolla", 4000, 4)
+    suv = SUV("Jeep", "Wrangler", 7000, True)
+    truck = Truck("Volvo", "FH16", 10000, 20)
+
+    displayAny(car)
+    displayAny(suv)
+    displayAny(truck)
+
+    cust1 = Customer("Wamiza Noman", "0333-1234567")
+    start = date(2025, 10, 10)
+    end = date(2025, 10, 15)
+    reservation1 = RentalReservation(cust1, suv, start, end)
+
+    displayAny(reservation1)
+    cust1.displayRentalHistory()
+    suv.returnVehicle()
+
+
+Task 6:
+
+class Employee:
+    def __init__(self, name, salary):
+        self.name = name
+        self.salary = salary
+
+    def calculateBonus(self):
+        pass
+
+class Manager(Employee):
+    def __init__(self, name, salary):
+        super().__init__(name, salary)
+
+    def calculateBonus(self):
+        return 0.20 * self.salary
+
+    def hire(self):
+        print(f"Manager {self.name} is hiring a new employee.")
+
+class Developer(Employee):
+    def __init__(self, name, salary):
+        super().__init__(name, salary)
+
+    def calculateBonus(self):
+        return 0.10 * self.salary
+
+    def writeCode(self):
+        print(f"Developer {self.name} is writing code.")
+
+class SeniorManager(Manager):
+    def __init__(self, name, salary):
+        super().__init__(name, salary)
+
+    def calculateBonus(self):
+        return 0.30 * self.salary
+
+if __name__ == "__main__":
+    emp1 = Manager("Wamiza", 80000)
+    emp2 = Developer("Alishba", 60000)
+    emp3 = SeniorManager("Noman", 100000)
+
+    emp1.hire()
+    emp2.writeCode()
+
+    print(f"{emp1.name}'s Bonus: Rs {emp1.calculateBonus()}")
+    print(f"{emp2.name}'s Bonus: Rs {emp2.calculateBonus()}")
+    print(f"{emp3.name}'s Bonus: Rs {emp3.calculateBonus()}")
+
+s = Square(3)
+print("The Area of Square is: ",s.area())
