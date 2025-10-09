@@ -1,1 +1,216 @@
+Task 1:
 
+try:
+    with open("filing.txt", 'r') as f:
+        content = f.read()
+    count = len(content.split())
+    print(count)
+    
+except FileNotFoundError:
+    print("The file filing.txt was not found")
+except PermissionError:
+    print("Do not have permission to read this file")
+except Exception as e:
+    print("The Error is :" +str(e))
+except:
+    print("Error is found")
+
+
+Task 2:
+
+try:
+    with open("filing.txt", 'r') as f:
+        content = f.read()
+    
+    newC = content.replace("File","Txt File")
+
+    with open("filing.txt",'w') as f:
+        f.write(newC)
+    
+    print("Replaced Successfully")
+
+except FileNotFoundError:
+    print("File Not Found")
+except PermissionError:
+    print("Do not have Permission to read this file")
+except Exception as e:
+    print("The Error is: " +str(e))
+
+
+Task 3 :
+
+try:
+    arr1 = []
+    arr2 = []
+    n = int(input("Enter number of elements af an array: "))
+    for i in range(n):
+        val = input(f"Enter the {i+1} elements of array: ")
+        arr1.append(val)
+
+    for i in range(n):
+        val2 = input("Enter the 2nd array elements must be the same size as 1st array: ")
+        arr2.append(val2)
+    
+    print("Array1 = ",arr1)
+    print("Array2 = ",arr2)
+
+    dictionary = dict(zip(arr1,arr2))
+    
+    with open("filing.txt", "w") as f:
+        f.write(str(dictionary))
+    
+    with open("filing.txt", "r") as f:
+        read = f.read()
+    print("File content:", read)
+
+except FileNotFoundError:
+    print("File Not Found")
+except PermissionError:
+    print("Permission Denied")
+except Exception as e:
+    print("The error is: " +str(e))
+except:
+    print("There are still some errors")
+
+
+Task 4:
+
+try:
+    name = input("Enter Your Name: ")
+    nic = int(input("Enter CNIC Number: "))
+    age = int(input("Enter Your Age: "))
+    salary = int(input("Enter Your Salary: "))
+    
+    with open("bioData.txt", 'w') as f:
+        f.write("\nName: " + name + "\n")
+        f.write("CNIC: " + str(nic) + "\n")
+        f.write("Age: " + str(age) + "\n")
+        f.write("Salary: " + str(salary) + "\n")
+        
+    contact = int(input("Enter Your Phone Number: "))
+        
+    with open("bioData.txt", "a") as f:
+        f.write("Contact: " + str(contact) + "\n")
+        
+    with open("bioData.txt", 'r') as f:
+        content= f.read()
+        print(content)
+        
+except FileNotFoundError:
+    print("File not Found")
+except PermissionError:
+    print("Permission Denied")
+except ValueError:
+    print("Invalid input. Please enter correct data types.")
+except Exception as e:
+    print("The Error is: " +str(e))
+except:
+    print("Error Exist")
+
+
+Task 5:
+
+try:
+    n = int(input("Enter The NUmber of Items: "))
+
+    dict ={}
+    for i in range(n):
+        key = input("Enter Name: ")
+        value = int(input("Enter Age: "))
+        dict[key] = value
+
+    import json;
+    
+    with open("filing.txt", 'w') as f:
+        json.dump(dict, f)
+    
+    with open("filing.txt", 'r') as f:
+        content = json.load(f)
+        print(content)
+        
+except FileNotFoundError:
+    print("File not Found")
+except PermissionError:
+    print("Permission Denied")
+except ValueError:
+    print("Invalid input. Please enter correct data types.")
+except Exception as e:
+    print("The Error is: " +str(e))
+except:
+    print("Error Exist")
+
+
+Task 6:
+
+def saveQuestion():
+    try:
+        n = input("Enter A Sentence: ")
+    
+        if n.strip().endswith("?"):
+            with open("questions.txt", 'a') as f:
+                f.write(n + "\n")
+        else:
+            print("This is not a question, So it won't be saved")
+                
+    except FileNotFoundError:
+        print("File not Found")
+    except PermissionError:
+        print("Permission Denied")
+    except ValueError:
+        print("Invalid input. Please enter correct data types.")
+    except Exception as e:
+        print("The Error is: " +str(e))
+    except:
+        print("Error Exist")
+        
+saveQuestion()
+
+
+Task 7:
+
+def replace():
+    try:
+        with open("replacement_needed.txt", 'r') as f:
+            content = f.read()
+        
+        if "ths" in content:
+            rep = content.replace("ths", "the")
+        else :
+            rep = content.replace("s", "e")
+        
+        with open("replacement_needed.txt", 'w') as f:
+            f.write(rep)
+            
+        with open("replacement_needed.txt", 'r') as f:
+            content = f.read()
+            print(content)
+    
+    except FileNotFoundError:
+        print("File not Found")
+    except PermissionError:
+        print("Permission Denied")
+    except ValueError:
+        print("Invalid input. Please enter correct data types.")
+    except Exception as e:
+        print("The Error is: " +str(e))
+    except:
+        print("Error Exist")
+
+replace()
+
+
+Task 8:
+
+try:
+    a = int(input("Enter a Number: "))
+    b = int(input("Enter 2nd Number: "))
+    c = a/b
+    print(c)
+
+except ZeroDivisionError:
+    print("Zero Division Exception Handled")
+except ValueError:
+    print("Wrong Entered Value Handled")
+
+except:
+    print("There is some Error")
